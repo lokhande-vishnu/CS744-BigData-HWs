@@ -1,0 +1,41 @@
+MATRIX MULTIPLICATION
+------------------------------------------------
+The matrix was divided into 25 splits along each dimension, leading to 625 4000*4000 sub-matrices. Each submatrix was generated on one of the 5 machines in a modulo fashion and then the traces were collected on machine 0. CPU is the bottleneck for this. 
+
+How to run?
+./bigmatrixmultiplication.sh
+
+Computation takes around 4 minutes. 
+
+
+SYNCHRONOUS SGD
+------------------------------------------------
+Each worker machines reads one input at a time and computes local gradient and sends it toworker 0 to add to 'w'. This defines one iteration. Each iteration takes about 1.5s. 
+tf.gather(w, index.values) is placed on worker 0 to speed up iteration. The local gradients are all sparse vectors which are added to dense vector 'w' on worker 0. This is the bottleneck step for each iteration.
+Test error is caluclated every 5 iterations for the first 100 iterations and then for every 100 iterations.
+
+How to run?
+./synchronoussgd.sh
+
+The code will run for 20 iterations for now (can be modified inside synchronoussgd.py). 
+The output shows the time taken for each iteration e.g. '1 0:00:01.683687' - Iteration 1 took 1.6s and '0 [ 11168.]' represents the number of misclassified examples for iteration 0.
+
+ASYNCHRONOUS SGD
+-----------------------------------------------
+This is similar to synchronous SGD, expect that each worker independently updates 'w'. Updating of 'w' happend on worker 0 and is the bottleneck. Workers 1-4 take about 4s for each iteration, where as worker 0 takes about 1.5s
+
+
+How to run?
+./launch_asyncsgd.sh
+
+Output can be viewed in asynclog-<x>.out, where x in [0, 4]. The format for the output is similar to synchronous. Runs for 20 iterations currently.
+
+BATCH SGD
+----------------------------------------------
+Each worker uses reader.read_up_to to raad upto batch_size data and then computes local gradient for the batch_size examples, which is then sent to worker 0 for updating 'w'.
+
+How to run?
+./batchsynchronoussgd.sh - for synchronous
+./launch_batchasyncsgd.sh - for asynchronous (Output available in batch-asynclog-<x>.out)
+
+Both of them are scheduled to run for 10 iterations. 

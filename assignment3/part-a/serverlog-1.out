@@ -1,0 +1,5 @@
+I tensorflow/core/distributed_runtime/rpc/grpc_channel.cc:197] Initialize GrpcChannelCache for job worker -> {0 -> localhost:2222, 1 -> vm-11-2:2222, 2 -> vm-11-3:2222, 3 -> vm-11-4:2222, 4 -> vm-11-5:2222}
+I tensorflow/core/distributed_runtime/rpc/grpc_server_lib.cc:206] Started server with target: grpc://localhost:2222
+I tensorflow/core/distributed_runtime/master_session.cc:928] Start master session 7e16d8ec3eef0384 with config: 
+
+bash: line 1: 28370 Killed                  python startserver.py --task_index=0

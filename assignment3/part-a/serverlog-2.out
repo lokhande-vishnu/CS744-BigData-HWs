@@ -1,0 +1,4 @@
+nohup: ignoring input
+I tensorflow/core/distributed_runtime/rpc/grpc_channel.cc:197] Initialize GrpcChannelCache for job worker -> {0 -> vm-11-1:2222, 1 -> localhost:2222, 2 -> vm-11-3:2222, 3 -> vm-11-4:2222, 4 -> vm-11-5:2222}
+I tensorflow/core/distributed_runtime/rpc/grpc_server_lib.cc:206] Started server with target: grpc://localhost:2222
+bash: line 1: 13436 Killed                  python startserver.py --task_index=1
